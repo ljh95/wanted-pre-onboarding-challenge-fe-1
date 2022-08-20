@@ -1,25 +1,68 @@
 import instance from '@/api/axios';
 import { useEffect, useState } from 'react';
+import { useError } from './useError';
 import { TodoForm } from './useTodo';
 
 export const useTodoApi = () => {
   const [todoList, setTodoList] = useState<Todo[]>([]);
-
-  const getTodoListApi = async (): Promise<GetTodoListResponse> => {
-    return instance.get('/todos');
-  };
+  const { noUserError } = useError();
 
   const getTodoList = async () => {
     try {
-      const res = await getTodoListApi();
-
-      if (!res.data) {
-        return;
-      }
+      const res = await instance.get('/todos');
 
       setTodoList(res.data);
-    } catch (error: any) {
-      // alert(error.response.data.details);
+    } catch (error) {
+      noUserError(error);
+    }
+  };
+
+  const addTodo = async (todoForm: TodoForm, initForm: () => void) => {
+    if (isInvalidTodoForm(todoForm)) {
+      alert('todo must required');
+      return;
+    }
+
+    try {
+      const { title, content } = todoForm;
+
+      await instance.post('/todos', {
+        title,
+        content
+      });
+
+      initForm();
+      refetch();
+    } catch (error) {
+      noUserError(error);
+    }
+  };
+
+  const updateTodo = async (todoId: string, title: string, content: string) => {
+    if (isInvalidTodoForm({ title, content })) {
+      alert('todo must required');
+      return;
+    }
+
+    try {
+      await instance.put(`todos/${todoId}`, {
+        title,
+        content
+      });
+
+      refetch();
+    } catch (error) {
+      noUserError(error);
+    }
+  };
+
+  const deleteTodo = async (todoId: string) => {
+    try {
+      await instance.delete(`/todos/${todoId}`);
+
+      refetch();
+    } catch (error) {
+      noUserError(error);
     }
   };
 
@@ -31,43 +74,6 @@ export const useTodoApi = () => {
     getTodoList();
   };
 
-  const addTodo = async (todoForm: TodoForm, initForm: () => void) => {
-    try {
-      const { title, content } = todoForm;
-      const res = await instance.post('/todos', {
-        title,
-        content
-      });
-
-      initForm();
-      refetch();
-    } catch (error: any) {
-      console.log(error.response);
-    }
-  };
-
-  const updateTodo = async (todoId: string, title: string, content: string) => {
-    try {
-      const res = await instance.put(`todos/${todoId}`, {
-        title,
-        content
-      });
-
-      refetch();
-    } catch (error: any) {
-      console.log(error.response);
-    }
-  };
-
-  const deleteTodo = async (todoId: string) => {
-    try {
-      const res = await instance.delete(`/todos/${todoId}`);
-
-      refetch();
-    } catch (error: any) {
-      console.log(error.response);
-    }
-  };
   return { todoList, refetch, addTodo, updateTodo, deleteTodo };
 };
 
@@ -84,3 +90,6 @@ type GetTodoListResponse = {
   message: string;
   details: string;
 };
+function isInvalidTodoForm(todoForm: TodoForm) {
+  return todoForm.title.trim() === '' || todoForm.content.trim() === '';
+}

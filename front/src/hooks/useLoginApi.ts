@@ -1,7 +1,7 @@
 import instance, { ACCESS_TOKEN } from '@/api/axios';
 import { isLoginSuccess } from '@/func/response';
 import { useNavigate } from 'react-router-dom';
-import { URL } from '@/func/url';
+import { PathObj } from '@/func/url';
 
 type ReturnType = {
   login: (email: string, pw: string) => void;
@@ -30,7 +30,7 @@ export const useLoginApi = (): ReturnType => {
 
       localStorage.setItem(ACCESS_TOKEN, res.token);
       alert('로그인에 성공하였습니다.');
-      navigate(URL.home);
+      navigate(PathObj.home);
     } catch (error) {
       // alert(error.response.data.details);
     }
