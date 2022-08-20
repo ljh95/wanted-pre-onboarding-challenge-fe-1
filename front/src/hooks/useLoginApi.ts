@@ -31,8 +31,8 @@ export const useLoginApi = (): ReturnType => {
       localStorage.setItem(ACCESS_TOKEN, res.token);
       alert('로그인에 성공하였습니다.');
       navigate(URL.home);
-    } catch (error: any) {
-      alert(error.response.data.details);
+    } catch (error) {
+      // alert(error.response.data.details);
     }
   };
 

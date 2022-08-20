@@ -30,8 +30,8 @@ export const useSignupApi = (): ReturnType => {
 
       alert('회원가입에 성공하였습니다!');
       navigate(URL.login);
-    } catch (error: any) {
-      alert(error.response.data.details);
+    } catch (error) {
+      // alert(error.response.data.details);
     }
   };
 

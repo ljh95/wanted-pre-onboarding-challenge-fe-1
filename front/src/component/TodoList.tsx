@@ -25,6 +25,7 @@ export const TodoList = ({ todoList, updateTodo, deleteTodo }: Props) => {
       if (mode === 'create' || todo.id !== currentTodoId)
         return (
           <TodoItem
+            key={todo.id}
             todo={todo}
             setCurrentTodoId={setCurrentTodoId}
             setMode={setMode}
@@ -35,6 +36,7 @@ export const TodoList = ({ todoList, updateTodo, deleteTodo }: Props) => {
         );
       return (
         <UpdateTodoItem
+          key={todo.id}
           todo={todo}
           updateTodoForm={updateTodoForm}
           setUpdateTitle={setUpdateTitle}
