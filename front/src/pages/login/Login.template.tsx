@@ -6,6 +6,7 @@ export const Login = () => {
   const { loginForm, setEmail, setPassword, isValid } = useLoginForm();
   const { login } = useLoginApi();
 
+  // 이미 로그인한 사용자인지 확인하는 훅입니다.
   useIsLogined();
 
   return (

@@ -9,10 +9,12 @@ export const useIsLogined = () => {
   const isLoginedRef = useRef(false);
 
   useEffect(() => {
-    if (accessToken && !isLoginedRef.current) {
+    const isHomeUrl = window.location.pathname === '/';
+
+    if (!isHomeUrl && accessToken && !isLoginedRef.current) {
       isLoginedRef.current = true;
-      nv(URL.home);
       alert('이미 로그인된 사용자 입니다.');
+      nv(URL.home);
     }
   }, [accessToken]);
 };
