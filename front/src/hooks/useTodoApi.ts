@@ -19,7 +19,7 @@ export const useTodoApi = () => {
 
       setTodoList(res.data);
     } catch (error: any) {
-      alert(error.response.data.details);
+      // alert(error.response.data.details);
     }
   };
 
