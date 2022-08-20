@@ -6,6 +6,9 @@ export const Navigation = () => {
     <nav>
       <ul>
         <li>
+          <Link to={URL.home}>홈: 투두</Link>
+        </li>
+        <li>
           <Link to={URL.login}>로그인</Link>
         </li>
         <li>
