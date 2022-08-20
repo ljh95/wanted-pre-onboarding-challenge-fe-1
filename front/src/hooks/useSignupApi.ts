@@ -1,7 +1,7 @@
 import instance from '@/api/axios';
 import { isSingupSuccess } from '@/func/response';
 import { useNavigate } from 'react-router-dom';
-import { URL } from '@/func/url';
+import { PathObj } from '@/func/url';
 
 type ReturnType = {
   signup: (email: string, pw: string) => Promise<void>;
@@ -29,7 +29,7 @@ export const useSignupApi = (): ReturnType => {
       }
 
       alert('회원가입에 성공하였습니다!');
-      navigate(URL.login);
+      navigate(PathObj.login);
     } catch (error) {
       // alert(error.response.data.details);
     }

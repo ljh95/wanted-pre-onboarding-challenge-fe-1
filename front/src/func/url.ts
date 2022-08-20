@@ -1,4 +1,4 @@
-export const URL = {
+export const PathObj = {
   home: '/',
   login: '/auth/login',
   signin: '/auth/signin'

@@ -1,5 +1,5 @@
 import { ACCESS_TOKEN } from '@/api/axios';
-import { URL } from '@/func/url';
+import { PathObj } from '@/func/url';
 import { useEffect, useMemo, useRef } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 
@@ -16,7 +16,7 @@ export const useIsLogined = () => {
     if (!isHomeUrl && accessToken && !isLoginedRef.current) {
       isLoginedRef.current = true;
       alert('이미 로그인된 사용자 입니다.');
-      nv(URL.home);
+      nv(PathObj.home);
     }
   }, [accessToken]);
 };
